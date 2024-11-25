@@ -8,10 +8,10 @@ from tensorflow.keras.backend import l2_normalize, sum
 from tensorflow.keras.models import load_model
 
 max_len = 100
-vectorizer_file_path = 'ai/vectorizer.keras'
-tfidf_vectorizer_file_path = 'ai/tfidf_vectorizer.pkl'
-model_weights_file_path = 'ai/test.weights.h5'
-classifier_model_file_path = 'ai/gradient_boosting_model.pkl'
+vectorizer_file_path = 'ai/serialized_models/vectorizer.keras'
+tfidf_vectorizer_file_path = 'ai/serialized_models/tfidf_vectorizer.pkl'
+lstm_weights_file_path = 'ai/serialized_models/lstm.weights.h5'
+classifier_model_file_path = 'ai/serialized_models/xgboost.pkl'
 tf.keras.config.enable_unsafe_deserialization()
 
 def get_vectorizer():
@@ -51,12 +51,12 @@ def get_ranking_model():
 
     merged = Concatenate()([normalized_resume, normalized_job_desc, cosine_similarity])
     dense = Dense(64, activation='relu', kernel_regularizer=l2(0.001))(merged)
-    dropout = Dropout(0.2)(dense)
+    dropout = Dropout(0.4)(dense)
     output = Dense(3, activation='softmax', kernel_regularizer=l2(0.001))(dropout)
 
     model = Model(inputs=[input_resume, input_job_desc], outputs=output)
 
-    model.load_weights(model_weights_file_path)
+    model.load_weights(lstm_weights_file_path)
 
     return model
 

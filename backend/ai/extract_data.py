@@ -5,12 +5,14 @@ import nltk
 import spacy
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-from ai.models import vectorizer, ranking_model, summarizer, tfidf_vectorizer, classifier
+from ai.models import vectorizer, ranking_model, summarizer, tfidf_vectorizer, classifier, classifier_label_encoder
+import xgboost as xgb
+import numpy as np
 
 nltk.download('punkt')
 nltk.download('stopwords')
 
-nlp = spacy.load('en_core_web_sm')
+nlp = spacy.load('en_core_web_lg')
 stop_words = set(stopwords.words('english'))
 lemmatizer = WordNetLemmatizer()
 
@@ -29,8 +31,8 @@ def extract_text_from_pdf(file):
     return text
 
 def extract_contact_info(text):
-    phone_pattern = re.compile(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')
-    email_pattern = re.compile(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+    phone_pattern = re.compile(r'[\+]?[(]?[0-9]{2}[)]?[-\s\.]*[0-9]{3}[-\s\.]*[0-9]{3}[-\s\.]*[0-9]{3}')
+    email_pattern = re.compile(r'(?:[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])')
 
     phone_numbers = phone_pattern.findall(text)
     emails = email_pattern.findall(text)
@@ -68,7 +70,12 @@ def get_summary(resume_text):
 
 def predict_category(resume_text):
     X_new = tfidf_vectorizer.transform([resume_text])
-    return classifier.predict(X_new)[0]
+
+    y_pred_probs = classifier.predict(xgb.DMatrix(X_new))
+    predicted_class_index = np.argmax(y_pred_probs, axis=1)[0]
+    predicted_category = classifier_label_encoder.inverse_transform([predicted_class_index])[0]
+
+    return predicted_category
 
 def extract_data(resume_file, job_description):
     resume_text = extract_text_from_pdf(resume_file)
@@ -86,6 +93,15 @@ def extract_data(resume_file, job_description):
     vectorized_job_desc = vectorizer([cleaned_job_desc])
 
     prediction = ranking_model.predict([vectorized_resume, vectorized_job_desc])
-    good_fit_probablility = max(0, prediction[0, 2] - prediction[0, 0])
+    good_fit_probablility = max(0, prediction[0, 0] - prediction[0, 1])
+    print(prediction)
+
+    score = (
+        (prediction[0, 0] * 1.0) +  # good fit  
+        (prediction[0, 1] * -1.0) + # no fit
+        (prediction[0, 2] * 0.7)    # potencial fit
+    )
     
-    return good_fit_probablility, summary, category, full_name, phone_number, email
+    score = max(0, min(1, score))
+
+    return score, summary, category, full_name, phone_number, email

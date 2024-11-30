@@ -11,7 +11,6 @@ def create_app():
     db.init_app(app)
 
     with app.app_context():
-        from models import user
         db.create_all()
 
     from routes.job_posting import job_posting_bp

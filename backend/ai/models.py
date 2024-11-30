@@ -12,6 +12,7 @@ vectorizer_file_path = 'ai/serialized_models/vectorizer.keras'
 tfidf_vectorizer_file_path = 'ai/serialized_models/tfidf_vectorizer.pkl'
 lstm_weights_file_path = 'ai/serialized_models/lstm.weights.h5'
 classifier_model_file_path = 'ai/serialized_models/xgboost.pkl'
+classifier_label_encoder_file_path = 'ai/serialized_models/label_encoder.pkl'
 tf.keras.config.enable_unsafe_deserialization()
 
 def get_vectorizer():
@@ -24,6 +25,10 @@ def get_tfidf_vectorizer():
 
 def get_classifier():
     with open(classifier_model_file_path, 'rb') as file:
+        return pickle.load(file)
+
+def get_classifier_label_encoder():
+    with open(classifier_label_encoder_file_path, 'rb') as file:
         return pickle.load(file)
 
 def get_ranking_model():
@@ -64,4 +69,5 @@ vectorizer = get_vectorizer()
 tfidf_vectorizer = get_tfidf_vectorizer()
 ranking_model = get_ranking_model()
 classifier = get_classifier()
+classifier_label_encoder = get_classifier_label_encoder()
 summarizer = pipeline("summarization", model="facebook/bart-large-cnn", framework="pt")

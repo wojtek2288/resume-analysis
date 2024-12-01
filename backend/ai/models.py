@@ -36,7 +36,7 @@ def get_ranking_model():
     input_job_desc = Input(shape=(max_len,))
 
     embedding_dim = 128
-    embedding = Embedding(input_dim=10000, output_dim=embedding_dim, input_length=max_len)
+    embedding = Embedding(input_dim=10000, output_dim=embedding_dim)
 
     encoded_resume = embedding(input_resume)
     encoded_job_desc = embedding(input_job_desc)

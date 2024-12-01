@@ -24,6 +24,7 @@ source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 
 ```bash
 pip install -r requirements.txt
+python -m spacy download en_core_web_lg
 ```
 
 ### 4. Run the Application

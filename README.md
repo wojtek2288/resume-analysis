@@ -11,6 +11,7 @@ Projekt składa się z dwóch głównych komponentów: **web** oraz **backend**,
 
 ## Struktura projektu
 
+```text
 .
 ├── docker-compose.yml
 ├── web
@@ -24,6 +25,7 @@ Projekt składa się z dwóch głównych komponentów: **web** oraz **backend**,
 │   └── dane do treningu modeli
 └── backend
     └── kod aplikacji backendowej
+```
 
 ## Uruchomienie projektu
 

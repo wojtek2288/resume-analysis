@@ -2,7 +2,7 @@
 
 ## Opis projektu
 
-Projekt składa się z dwóch głównych komponentów: **web** oraz **backend**, uruchamianych za pomocą Docker Compose. Oba komponenty mają swoje Dockerfile i są zmapowane na odpowiednie porty.
+Projekt składa się z dwóch aplikacji: **web** oraz **backend**, uruchamianych za pomocą Docker Compose.
 
 ## Wymagania wstępne
 
@@ -29,14 +29,23 @@ Projekt składa się z dwóch głównych komponentów: **web** oraz **backend**,
 
 ## Uruchomienie projektu
 
-1. **Uruchom aplikację za pomocą Docker Compose**:
+   ```bash
    docker compose up
+   ```
 
-2. **Dostęp do kontenerów**:
-   - Web: <http://localhost:3000>
-   - Backend: <http://localhost:5000>
+## Dostęp do aplikacji
 
-## Zatrzymanie kontenerów
+- Web: <http://localhost:3000>
+- Backend: <http://localhost:5000>
 
-Aby zatrzymać działanie kontenerów, użyj:
-   `docker compose down` lub `Ctrl-C`
+## Zatrzymanie aplikacji
+
+```bash
+Ctrl-C
+```
+
+## Usunięcie aplikacji
+
+```bash
+docker compose down
+```

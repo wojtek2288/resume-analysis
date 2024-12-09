@@ -9,11 +9,8 @@ WORKDIR /app
 
 COPY requirements.txt ./
 
-RUN python -m venv venv \
-    && ./venv/bin/pip install --no-cache-dir -r requirements.txt \
-    && ./venv/bin/python -m spacy download en_core_web_lg
-
-ENV PATH="/app/venv/bin:$PATH"
+RUN pip install --no-cache-dir -r requirements.txt \
+    && python -m spacy download en_core_web_lg
 
 COPY . .
 

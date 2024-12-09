@@ -13,11 +13,11 @@ def create_app():
     with app.app_context():
         db.create_all()
 
-    CORS(job_posting_bp, resources={r"/*": {"origins": "http://localhost:3000"}})
+    CORS(app, resources={r"/*": {"origins": "*"}})
     app.register_blueprint(job_posting_bp, url_prefix='/JobPostings')
     
     return app
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

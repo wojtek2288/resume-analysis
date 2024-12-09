@@ -13,17 +13,17 @@ Projekt składa się z dwóch głównych komponentów: **web** oraz **backend**,
 
 .
 ├── docker-compose.yml
-├── web/
-│   └── [kod aplikacji frontendowej]
-├── experiments/
+├── web
+│   └── kod aplikacji frontendowej
+├── experiments
 │   ├── classification
-│   │   └── [kod eksperymentów - klasyfikacja CV]
+│   │   └── kod eksperymentów - klasyfikacja CV
 │   └── ranking
-│       └── [kod eksperymentów - ranking CV]
-├── data/
-│   └── [dane do treningu modeli]
-└── backend/
-    └── [kod aplikacji backendowej]
+│       └── kod eksperymentów - ranking CV
+├── data
+│   └── dane do treningu modeli
+└── backend
+    └── kod aplikacji backendowej
 
 ## Uruchomienie projektu
 

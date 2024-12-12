@@ -13,7 +13,7 @@ const JobPostingPage: React.FC = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [applicants, setApplicants] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);  // Initial loading state
+  const [loading, setLoading] = useState<boolean>(true);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [uploading, setUploading] = useState<boolean>(false);

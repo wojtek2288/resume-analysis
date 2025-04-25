@@ -1,50 +1,50 @@
-# Analiza CV z zastosowaniem uczenia maszynowego w celu optymalizacji procesów rekrutacyjnych
+# Resume analysis using nachine learning to optimize recruitment processes
 
-## Opis projektu
+## Project Description
 
-Projekt składa się z dwóch aplikacji: **web** oraz **backend**, uruchamianych za pomocą Docker Compose.
+The project consists of two applications: **web** and **backend**, both run using Docker Compose.
 
-## Wymagania wstępne
+## Prerequisites
 
 - Docker (<https://docs.docker.com/get-docker/>)
 - Docker Compose (<https://docs.docker.com/compose/>)
 
-## Struktura projektu
+## Project Structure
 
 ```text
 .
 ├── docker-compose.yml
 ├── web
-│   └── kod aplikacji frontendowej
+│   └── frontend application code
 ├── experiments
 │   ├── classification
-│   │   └── kod eksperymentów - klasyfikacja CV
+│   │   └── experiment code – CV classification
 │   └── ranking
-│       └── kod eksperymentów - ranking CV
+│       └── experiment code – CV ranking
 ├── data
-│   └── dane do treningu modeli
+│   └── data for model training
 └── backend
-    └── kod aplikacji backendowej
+    └── backend application code
 ```
 
-## Uruchomienie projektu
+## Running the Project
 
-   ```bash
-   docker compose up
-   ```
+```bash
+docker compose up
+```
 
-## Dostęp do aplikacji
+## Accessing the Applications
 
-- Web: <http://localhost:3000>
+- Web: <http://localhost:3000>  
 - Backend: <http://localhost:5000>
 
-## Zatrzymanie aplikacji
+## Stopping the Applications
 
 ```bash
 Ctrl-C
 ```
 
-## Usunięcie aplikacji
+## Removing the Applications
 
 ```bash
 docker compose down

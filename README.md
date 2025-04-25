@@ -1,8 +1,8 @@
 # Resume analysis using nachine learning to optimize recruitment processes
 
-## Summary
-
 This repository contains the full implementation and documentation of the master’s thesis prepared as part of the Machine Learning master's program at Warsaw University of Technology.
+
+## Summary
 
 The purpose of this thesis was to develop and implement a system that enables the automatic review of candidates applying for specific job openings. The system uses modern natural language processing and machine learning technologies to support recruitment processes by automating the analysis of application documents. 
 
